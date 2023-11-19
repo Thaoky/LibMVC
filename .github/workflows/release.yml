@@ -31,7 +31,7 @@ jobs:
 
       - name: Build and test
         run: |
-          lua test.lua
+          lua .github/workflows/test.lua
 
       # Runs a single command using the runners shell
       - name: Package content
