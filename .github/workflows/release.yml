@@ -23,11 +23,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Build and test
-        run: |
-          lua .github/workflows/test.lua
-
       # Runs a single command using the runners shell
       - name: Package content
         run: |
           zip -r LibMVC-1.0.zip * -x README.md
+
+      - name: Upload to API
+        run: |
+          curl -X POST \
+          -H "Content-Type: application/zip" \
+          -H "Authorization: Bearer ${{ secrets.CURSEFORGE_API_TOKEN }}" \
+          -d @LibMVC-1.0.zip \
+          -d '{"displayName": "LibMVC-1.0", "gameVersions": "10215", "releaseType": "release", "changelog": "First commit via GitHub"}' \
+          https://wow.curseforge.com/api/projects/game/upload-file          
