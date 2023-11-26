@@ -34,4 +34,4 @@ jobs:
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
           -F "metadata={\"displayName\": \"LibMVC-1.0\", \"gameVersions\": \"10215\", \"releaseType\": \"release\", \"changelog\": \"First commit via GitHub\"}"  \
           -F "file=@LibMVC-1.0.zip" \
-          https://wow.curseforge.com/api/projects/game/upload-file          
+          https://wow.curseforge.com/api/projects/267058/upload-file          
