@@ -24,14 +24,21 @@ jobs:
       - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
-      - name: Package content
+      - name: Generate Zip file
         run: |
           zip -r LibMVC-1.0.zip * -x README.md
+    
+      - name: Get Zip file length
+        id: content_length
+        run: |
+          CONTENT_LENGTH=$(stat -c %s my_release.zip)
+          echo "Content-Length: $CONTENT_LENGTH" >> content_length.txt
 
       - name: Upload to Curseforge API
         run: |
           curl -L -X POST \
           -H "Content-Type: application/zip" \
+          -H "@content_length.txt" \
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
           -F "metadata={\"displayName\": \"LibMVC-1.0\", \"gameVersions\": \"10215\", \"releaseType\": \"release\", \"changelog\": \"First commit via GitHub\"}"  \
           -F "file=@LibMVC-1.0.zip" \
