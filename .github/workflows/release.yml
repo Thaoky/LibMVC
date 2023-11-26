@@ -17,6 +17,7 @@ jobs:
     # specify the environment variables used by the packager, matching the secrets from the project on GitHub
     env:
       CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+      ZIP_FILE_NAME: ""
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -43,7 +44,7 @@ jobs:
       - name: Upload to Curseforge API
         run: |
           API_URL="https://wow.curseforge.com/api/projects/${{ vars.CURSEFORGE_PROJECT_ID }}/upload-file"
-          FILE_PARAM="file=@$DISPLAY_NAME.zip"
+          FILE_PARAM="file=@$ZIP_FILE_NAME"
 
           echo "File param: $FILE_PARAM"
         
