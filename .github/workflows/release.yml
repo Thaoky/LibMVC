@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload to Curseforge API
         run: |
-          API_URL="https://wow.curseforge.com/api/projects/${{ github.CURSEFORGE_PROJECT_ID }}/upload-file"
+          API_URL="https://wow.curseforge.com/api/projects/${{ env.CURSEFORGE_PROJECT_ID }}/upload-file"
         
           curl -L -X POST \
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
