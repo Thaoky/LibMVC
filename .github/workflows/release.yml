@@ -35,9 +35,9 @@ jobs:
         
           # Combine date and value to form the zip file name
           DISPLAY_NAME="LibMVC-1.0 ${DATE}" 
-          
-          zip -r "$DISPLAY_NAME.zip" * -x README.md
-          echo "File name: $DISPLAY_NAME"
+          ZIP_FILE_NAME="$DISPLAY_NAME.zip"
+          zip -r "$ZIP_FILE_NAME" * -x README.md
+          echo "File name: $ZIP_FILE_NAME"
 
       - name: Upload to Curseforge API
         run: |
@@ -46,5 +46,5 @@ jobs:
           curl -L -X POST \
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
           -F "metadata={\"displayName\": \"$DISPLAY_NAME\", \"gameVersions\": [10215], \"releaseType\": \"alpha\", \"changelog\": \"First commit via GitHub\"}"  \
-          -F "file=@$DISPLAY_NAME.zip" \
-          $API_URL
+          -F "file=@$ZIP_FILE_NAME" \
+          "$API_URL"
