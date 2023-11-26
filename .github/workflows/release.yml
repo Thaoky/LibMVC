@@ -28,9 +28,9 @@ jobs:
         run: |
           zip -r LibMVC-1.0.zip * -x README.md
 
-      - name: Upload to API
+      - name: Upload to Curseforge API
         run: |
-          curl -X POST \
+          curl -L -X POST \
           -H "Content-Type: application/zip" \
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
           -d @LibMVC-1.0.zip \
