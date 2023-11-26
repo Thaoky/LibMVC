@@ -37,6 +37,7 @@ jobs:
           DISPLAY_NAME="LibMVC-1.0 ${DATE}" 
           
           zip -r "$DISPLAY_NAME.zip" * -x README.md
+          echo "$DISPLAY_NAME"
 
       - name: Upload to Curseforge API
         run: |
