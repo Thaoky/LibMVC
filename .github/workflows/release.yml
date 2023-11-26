@@ -34,7 +34,7 @@ jobs:
           VALUE_FROM_VARIABLE=$(echo "${{ github.event_name }}" | tr ' ' '_')
         
           # Combine date and value to form the zip file name
-          DISPLAY_NAME="LibMVC-1.0 ${DATE}" 
+          DISPLAY_NAME="LibMVC-1.0-${DATE}" 
           ZIP_FILE_NAME="$DISPLAY_NAME.zip"
           zip -r "$ZIP_FILE_NAME" * -x README.md
           echo "File name: $ZIP_FILE_NAME"
