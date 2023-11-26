@@ -35,7 +35,8 @@ jobs:
         
           # Combine date and value to form the zip file name
           DISPLAY_NAME="LibMVC-1.0-${DATE}" 
-          ZIP_FILE_NAME="$DISPLAY_NAME.zip"
+          #ZIP_FILE_NAME="$DISPLAY_NAME.zip"
+          ZIP_FILE_NAME="LibMVC-1.0.zip"
           zip -r "$ZIP_FILE_NAME" * -x README.md
           echo "File name: $ZIP_FILE_NAME"
 
@@ -46,5 +47,5 @@ jobs:
           curl -L -X POST \
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
           -F "metadata={\"displayName\": \"$DISPLAY_NAME\", \"gameVersions\": [10215], \"releaseType\": \"release\", \"changelog\": \"First commit via GitHub\"}"  \
-          -F "file=@./$ZIP_FILE_NAME" \
+          -F "file=@LibMVC-1.0.zip" \
           "$API_URL"
