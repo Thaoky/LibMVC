@@ -37,7 +37,7 @@ jobs:
           DISPLAY_NAME="LibMVC-1.0 ${DATE}" 
           
           zip -r "$DISPLAY_NAME.zip" * -x README.md
-          echo "$DISPLAY_NAME"
+          echo "File name: $DISPLAY_NAME"
 
       - name: Upload to Curseforge API
         run: |
@@ -47,4 +47,4 @@ jobs:
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
           -F "metadata={\"displayName\": \"$DISPLAY_NAME\", \"gameVersions\": [10215], \"releaseType\": \"alpha\", \"changelog\": \"First commit via GitHub\"}"  \
           -F "file=@$DISPLAY_NAME.zip" \
-          "$API_URL"
+          $API_URL
