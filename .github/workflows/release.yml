@@ -31,7 +31,7 @@ jobs:
       - name: Get Zip file length
         id: content_length
         run: |
-          CONTENT_LENGTH=$(stat -c %s my_release.zip)
+          CONTENT_LENGTH=$(stat -c %s LibMVC-1.0.zip)
           echo "Content-Length: $CONTENT_LENGTH" >> content_length.txt
 
       - name: Upload to Curseforge API
