@@ -44,9 +44,13 @@ jobs:
       - name: Upload to Curseforge API
         run: |
           API_URL="https://wow.curseforge.com/api/projects/${{ vars.CURSEFORGE_PROJECT_ID }}/upload-file"
+          FILE_PARAM="file=$ZIP_FILE_NAME"
+          echo "File param 1: $FILE_PARAM"
+          FILE_PARAM="$ZIP_FILE_NAME"
+          echo "File param 2: $FILE_PARAM"
           FILE_PARAM="file=@$ZIP_FILE_NAME"
-
-          echo "File param: $FILE_PARAM"
+          echo "File param 3: $FILE_PARAM"
+          
         
           curl -L -X POST \
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
