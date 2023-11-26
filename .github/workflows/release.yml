@@ -33,7 +33,6 @@ jobs:
           curl -X POST \
           -H "Content-Type: application/zip" \
           -H "x-api-token: ${{ secrets.CURSEFORGE_API_TOKEN }}" \
-          -o "upload_result.json" \
           -d @LibMVC-1.0.zip \
           -d '{"displayName": "LibMVC-1.0", "gameVersions": "10215", "releaseType": "release", "changelog": "First commit via GitHub"}' \
           https://wow.curseforge.com/api/projects/game/upload-file          
