@@ -45,7 +45,7 @@ jobs:
 
           # Set as environment variable for the next step
           echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
-          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
+          echo "::set-output ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
           echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
           echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
 
