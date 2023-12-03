@@ -18,7 +18,6 @@ jobs:
     # specify the environment variables used by the packager, matching the secrets from the project on GitHub
     env:
       PROJECT_NAME: "LibMVC-1.0"
-      CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
       ZIP_FILE_NAME: ""
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -44,10 +43,10 @@ jobs:
           echo "File name: $ZIP_FILE_NAME"
 
           # Set as environment variable for the next step
-          echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_OUTPUT
-          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_OUTPUT
-          echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_OUTPUT
-          echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_OUTPUT
+          echo "DISPLAY_NAME=$DISPLAY_NAME" >> "$GITHUB_OUTPUT"
+          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> "$GITHUB_OUTPUT"
+          echo "CHANGELOG=\"First commit via GitHub\"" >> "$GITHUB_OUTPUT"
+          echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> "$GITHUB_OUTPUT"
 
   # Job 2: Send the zip to the private repo
   trigger-curse-upload:
