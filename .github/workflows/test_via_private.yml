@@ -44,10 +44,10 @@ jobs:
           echo "File name: $ZIP_FILE_NAME"
 
           # Set as environment variable for the next step
-          echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
-          echo "::set-output ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
-          echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
-          echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
+          echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_OUTPUT
+          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_OUTPUT
+          echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_OUTPUT
+          echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_OUTPUT
 
   # Job 2: Send the zip to the private repo
   trigger-curse-upload:
