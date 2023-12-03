@@ -54,10 +54,10 @@ jobs:
     needs: build-zip-file
     uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
     with:
-      zip-file-path: process.env.ZIP_FILE_NAME
-      addon-display-name: process.env.DISPLAY_NAME
-      change-log: process.env.CHANGELOG
-      curse-project-id: process.env.CURSEFORGE_PROJECT_ID
+      zip-file-path: ${{ process.env.ZIP_FILE_NAME }}
+      addon-display-name: ${{ process.env.DISPLAY_NAME }}
+      change-log: ${{ process.env.CHANGELOG }}
+      curse-project-id: ${{ process.env.CURSEFORGE_PROJECT_ID }}
     secrets:
       envPAT: ${{ secrets.envPAT }}
       
