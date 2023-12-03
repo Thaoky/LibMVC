@@ -46,4 +46,4 @@ jobs:
           echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
           echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
           echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
-          echo "PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
+          echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
