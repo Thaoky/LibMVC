@@ -50,12 +50,12 @@ jobs:
           echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
 
   # Job 2: Send the zip to the private repo
-  trigger-private-workflow:
+  trigger-curse-upload:
     needs: build-zip-file
     uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
     with:
-      zip-file-path: ${{ env.ZIP_FILE_NAME }}
-      addon-display-name: ${{ env.DISPLAY_NAME }}
+      zip-file-path: $ZIP_FILE_NAME
+      addon-display-name: ${{ DISPLAY_NAME }}
       change-log: ${{ env.CHANGELOG }}
       curse-project-id: ${{ env.CURSEFORGE_PROJECT_ID }}
     secrets:
