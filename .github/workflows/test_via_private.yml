@@ -52,24 +52,12 @@ jobs:
   # Job 2: Send the zip to the private repo
   trigger-private-workflow:
     needs: build-zip-file
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Trigger Private Workflow
-        uses: actions/github-script@1.0.0
-        with:
-          script: |
-            const repo = 'CurseForgeUploader';
-            const response = await octokit.request('POST /repos/:owner/:repo/actions/workflows/:workflow_id/dispatches', {
-              owner: 'Thaoky',
-              repo: repo,
-              workflow_id: 'main',
-              ref: 'main',
-              inputs: {
-                CHANGELOG: process.env.CHANGELOG,
-                DISPLAY_NAME: process.env.DISPLAY_NAME,
-                ZIP_FILE_NAME: process.env.ZIP_FILE_NAME,
-                CURSEFORGE_PROJECT_ID: process.env.CURSEFORGE_PROJECT_ID
-              }
-            });
-            console.log(response.data);
+    uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
+    with:
+      zip-file-path: process.env.ZIP_FILE_NAME
+      addon-display-name: process.env.DISPLAY_NAME
+      change-log: process.env.CHANGELOG
+      curse-project-id: process.env.CURSEFORGE_PROJECT_ID
+    secrets:
+      envPAT: ${{ secrets.envPAT }}
+      
