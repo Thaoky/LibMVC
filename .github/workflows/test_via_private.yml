@@ -46,14 +46,18 @@ jobs:
           echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
           echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
           echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
+          echo "$CHANGELOG"
           echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
 
-      # Send the zip to the private repo
-      - name: trigger-curse-upload
-        uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
-        with:
-          zip-file-path: $ZIP_FILE_NAME
-          addon-display-name: $DISPLAY_NAME
-          change-log: $CHANGELOG
-          curse-project-id: $CURSEFORGE_PROJECT_ID
+  # Job 2: Send the zip to the private repo
+  trigger-curse-upload:
+    needs: build-zip-file
+    uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
+    with:
+      zip-file-path:  ${{ needs.build-zip-file.outputs.ZIP_FILE_NAME }}
+      addon-display-name: $DISPLAY_NAME
+      change-log: $env.CHANGELOG
+      curse-project-id: $CURSEFORGE_PROJECT_ID
+    secrets:
+      envPAT: ${{ secrets.envPAT }}	
       
