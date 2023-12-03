@@ -46,7 +46,7 @@ jobs:
           echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
           echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
           echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
-          echo "$CHANGELOG"
+          echo "Env: $GITHUB_ENV"
           echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
 
   # Job 2: Send the zip to the private repo
