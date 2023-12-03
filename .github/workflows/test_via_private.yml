@@ -43,20 +43,17 @@ jobs:
           echo "File name: $ZIP_FILE_NAME"
 
           # Set as environment variable for the next step
-          echo "DISPLAY_NAME=$DISPLAY_NAME" >> "$GITHUB_OUTPUT"
-          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> "$GITHUB_OUTPUT"
-          echo "CHANGELOG=\"First commit via GitHub\"" >> "$GITHUB_OUTPUT"
-          echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> "$GITHUB_OUTPUT"
+          echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
+          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
+          echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
+          echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
 
-  # Job 2: Send the zip to the private repo
-  trigger-curse-upload:
-    needs: build-zip-file
-    uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
-    with:
-      zip-file-path:  ${{ jobs.build-zip-file.outputs.ZIP_FILE_NAME }}
-      addon-display-name: $DISPLAY_NAME
-      change-log: $env.CHANGELOG
-      curse-project-id: $CURSEFORGE_PROJECT_ID
-    secrets:
-      envPAT: ${{ secrets.envPAT }}	
+      # Send the zip to the private repo
+      - name: trigger-curse-upload
+        uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
+        with:
+          zip-file-path: $ZIP_FILE_NAME
+          addon-display-name: $DISPLAY_NAME
+          change-log: $CHANGELOG
+          curse-project-id: $CURSEFORGE_PROJECT_ID
       
