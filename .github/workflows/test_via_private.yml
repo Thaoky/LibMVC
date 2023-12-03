@@ -9,8 +9,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  
+  # Job 1: build the zip file
+  build-zip-file:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -43,7 +44,32 @@ jobs:
           echo "File name: $ZIP_FILE_NAME"
 
           # Set as environment variable for the next step
-          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
           echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
+          echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
           echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
           echo "CURSEFORGE_PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
+
+  # Job 2: Send the zip to the private repo
+  trigger-private-workflow:
+    needs: build-zip-file
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Private Workflow
+        uses: actions/github-script@0.11.0
+        with:
+          script: |
+            const repo = 'CurseForgeUploader';
+            const response = await octokit.request('POST /repos/:owner/:repo/actions/workflows/:workflow_id/dispatches', {
+              owner: 'Thaoky',
+              repo: repo,
+              workflow_id: 'main',
+              ref: 'main',
+              inputs: {
+                CHANGELOG: process.env.CHANGELOG,
+                DISPLAY_NAME: process.env.DISPLAY_NAME,
+                ZIP_FILE_NAME: process.env.ZIP_FILE_NAME,
+                CURSEFORGE_PROJECT_ID: process.env.CURSEFORGE_PROJECT_ID
+              }
+            });
+            console.log(response.data);
