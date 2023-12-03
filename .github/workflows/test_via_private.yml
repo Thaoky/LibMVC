@@ -44,12 +44,6 @@ jobs:
 
           # Set as environment variable for the next step
           echo "ZIP_FILE_NAME=$ZIP_FILE_NAME" >> $GITHUB_ENV
-
-      # Set output parameters for the private repository
-      - name: Set output parameters
-        id: set-outputs
-        run: |
           echo "DISPLAY_NAME=$DISPLAY_NAME" >> $GITHUB_ENV
           echo "CHANGELOG=\"First commit via GitHub\"" >> $GITHUB_ENV
           echo "PROJECT_ID=${{ vars.CURSEFORGE_PROJECT_ID }}" >> $GITHUB_ENV
-        shell: bash
