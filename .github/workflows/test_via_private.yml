@@ -10,7 +10,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   
-  # Job 1: build the zip file
+  # Build the zip file
   build-zip-file:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -54,10 +54,10 @@ jobs:
     needs: build-zip-file
     uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
     with:
-      zip-file-path: $ZIP_FILE_NAME
+      zip-file-path:  ${{ needs.build-zip-file.outputs.ZIP_FILE_NAME }}
       addon-display-name: $DISPLAY_NAME
       change-log: $env.CHANGELOG
       curse-project-id: $CURSEFORGE_PROJECT_ID
     secrets:
-      envPAT: ${{ secrets.envPAT }}
+      envPAT: ${{ secrets.envPAT }}	
       
