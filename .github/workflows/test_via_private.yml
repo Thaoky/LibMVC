@@ -1,4 +1,4 @@
-name: Curseforge Release
+name: Shared-repo upload
 
 on:
   push:
