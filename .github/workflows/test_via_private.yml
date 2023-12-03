@@ -55,9 +55,9 @@ jobs:
     uses: Thaoky/CurseForgeUploader/.github/workflows/main.yml@main
     with:
       zip-file-path: $ZIP_FILE_NAME
-      addon-display-name: ${{ DISPLAY_NAME }}
-      change-log: ${{ env.CHANGELOG }}
-      curse-project-id: ${{ env.CURSEFORGE_PROJECT_ID }}
+      addon-display-name: $DISPLAY_NAME
+      change-log: $env.CHANGELOG
+      curse-project-id: $CURSEFORGE_PROJECT_ID
     secrets:
       envPAT: ${{ secrets.envPAT }}
       
