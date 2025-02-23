@@ -16,7 +16,7 @@ No data binding is implemented at this point, maybe later.
 
 --]]
 
-local LIB_VERSION_MAJOR, LIB_VERSION_MINOR = "LibMVC-1.0", 4
+local LIB_VERSION_MAJOR, LIB_VERSION_MINOR = "LibMVC-1.0", 6
 local lib = LibStub:NewLibrary(LIB_VERSION_MAJOR, LIB_VERSION_MINOR)
 
 if not lib then return end -- No upgrade needed
@@ -113,11 +113,25 @@ function lib:GetService(name)
 end
 
 -- *** View ***
-local function SetViewMethods(frame, controller)
-	-- simply assign all of the controller's methods to the frame
+local function SetViewMethods(frame, controller, controllerName)
+	-- Go up the chain of metatables, until the root, and assign the methods
+	local mt = getmetatable(controller)
+
+	while mt do
+		for methodName, method in pairs(mt) do
+			-- skip the meta methods
+			if type(method) == "function" and string.sub(methodName, 1, 2) ~= "__" and methodName ~= "Init" then
+				frame[methodName] = method
+			end
+		end
+		
+		mt = getmetatable(mt)
+	end
+	
+	-- assign all of the controller's methods to the frame, do this after the metatables' methods, to allow for overrides
 	for methodName, method in pairs(controller) do
 		frame[methodName] = method
-	end
+	end	
 end
 
 function lib:BindViewToController(frame, controller, inherits)
@@ -136,7 +150,7 @@ function lib:BindViewToController(frame, controller, inherits)
 		return 
 	end
 	
-	SetViewMethods(frame, controllers[controller])
+	SetViewMethods(frame, controllers[controller], controller)
 	
 	-- This controller's OnBind will be overwritten by the inherited ones, save it for now.
 	local saveOnBind = frame.OnBind
@@ -162,7 +176,14 @@ function lib:BindViewToController(frame, controller, inherits)
 	
 	-- .. then the actual controller's OnBind
 	if frame.OnBind then
-		frame:OnBind()
+		-- if a __Parent is defined, then set it
+		local parent = frame.__Parent
+		if parent then
+			frame:SetParent(parent)
+		end
+	
+		frame:OnBind(parent)
+		frame.__Parent = nil
 	end
 end
 
